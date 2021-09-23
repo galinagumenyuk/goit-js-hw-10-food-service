@@ -1,23 +1,11 @@
-const toggleEl = document.querySelector('.theme-switch__toggle');
-const bodyEl = document.querySelector('body');
+import cardsTpl from './templates/menu-cards.hbs';
+import menu from '../src/menu.json';
+import localStorage from '../src/localstorage';
 
-toggleEl.addEventListener('change', onChangeTheme);
+const cardsMarkup = createCardsMarkup(menu);
+const cardsContainer = document.querySelector('.js-menu');
+cardsContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 
-function onChangeTheme(e) {
-    if (toggleEl.checked) {
-        bodyEl.classList.add('dark-theme');
-        bodyEl.classList.remove('light-theme');
-        localStorage.setItem("theme", "dark-theme");
-  } else {
-      bodyEl.classList.add('light-theme');
-        bodyEl.classList.remove('dark-theme');
-        localStorage.setItem("theme", "light-theme");
-  }
+function createCardsMarkup(menu) {
+    return cardsTpl(menu);
 }
-
-window.onload = () => {
-    if (localStorage.getItem("theme") === "dark-theme") {
-        toggleEl.checked = true;
-    }
-    onChangeTheme();
-};
